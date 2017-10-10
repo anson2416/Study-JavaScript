@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="Atom">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>JS打气球 Balloon</title>
+    <style media="screen">
+      .{margin:0; padding: 0}
+
+      body {
+        overflow: hidden;
+        background: #ccc;
+      }
+
+      .balloon {
+        position: absolute;
+        width: 160px;
+        height: 160px;
+        background-color: #faf9f9;
+        border-radius: 160px 160px 64px 160px;
+        transform: rotate(45deg);
+        box-shadow: -8px -8px 80px -8px #873940 inset;
+
+      }
+
+      /* 定义气球的伪元素，以便生产气球的三角形尾巴*/
+      .balloon:after{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        content: "";
+        border: 8px solid transparent;
+        border-right-color: #873940;
+        transform: rotate(45deg);
+        border-radius: 50%;
+      }
+
+    </style>
+
+  </head>
+  <body>
+
+    <script type="text/javascript">
+      /*
+      1. 生成一定数量的气球
+      2. 气球移动
+      3. 气球爆炸
+       */
+
+      var wW = window.innerWidth;
+      var wH = window.innerHeight;
+      var bZ = 160; //气球本身的高度
+      var timer;
+      var aBalloons = [];  //气球缓存池
+
+      init();
+      move();
+      //timer = setInterval(move, 1000/60); //60 fps
+      timer = setInterval(move, 1000/30);
+
+      //绑定单击时间-到气球元素上 (className === 'balloon')
+      document.body.addEventListener('click', function(e){
+        if (e.target.className.toLowerCase() === 'balloon'){
+          /* 方法1：直接使用removeChild */
+
+          //删除节点对象 (使用上级节点额removeChild删除)
+          //DOM 对象无法删除/销毁自己
+          //e.target.parentNode.removeChild(e.target);
+          //删除气球数组元素 - 查找e.target对应的下标
+          //aBalloons.splice(aBalloons.lastIndexOf(e.target),1);
+          //console.log(aBalloons);
+
+          /* 方法2：编写爆炸函数boom */
+          // 1. 传递参数的时候，要注意不要直接把目标传递给函数作为入口函数(e.target)，这样会有性能问题
+          //    boom(e.target) -> 不建议使用
+          // 2. 通过boom.call传递目标，使得this不会丢失
+          boom.call(e.target, function cb(){
+            e.target.parentNode.removeChild(e.target);
+            aBalloons.splice(aBalloons.lastIndexOf(e.target),1);
+          });
+        }//end IF
+        },false);
+
+      /*
+        ********用户自定义函数********
+       */
+      function init(){
+        var num = 10;
+        var fragment = document.createDocumentFragment();
+        //获得浏览器的宽度 高度
+
+
+        for (var i = 0; i < num; i++) {
+          var oBalloon = document.createElement('div');
+          var randomX = ~~(Math.random() * wW);
+              //减去气球本身的宽度，来避免气球在屏幕右边越界
+              randomX = randomX - bZ;
+              //来避免气球在屏幕作边越界
+              randomX = Math.max(0,randomX);
+
+          oBalloon.className = 'balloon';
+          oBalloon.style.top = wH - bZ + "px";
+          oBalloon.style.left = Math.max(0,randomX) + "px";
+          //自定义气球属性 - speed
+          oBalloon.speed = ~~(Math.random() * 8) + 1;
+
+          //添加气球到“文档片段”-缓存
+          fragment.appendChild(oBalloon);
+          //把单个气球存放在“气球缓存池”
+          aBalloons.push(oBalloon);
+        }
+
+        document.body.appendChild(fragment);
+      }//end of init()
+
+      function move(){
+        /*
+        1. 获得所有生成的气球
+        2. 改变气球的top值实现气球的“往上升”
+         */
+        //var aBalloons = document.querySelectorAll(".balloon");
+
+        for (var i = 0, len=aBalloons.length; i < len; i++) {
+            aBalloons[i].style.top = aBalloons[i].offsetTop - aBalloons[i].speed + 'px';
+        }
+
+
+
+      }//end of Move()
+
+      function boom(cb){
+        //this = 被点击的气球
+        this.timer = setInterval(function(){
+          if(this.offsetWidth<10){
+            // 因为要删除元素，所以要把绑定在元素上的timer去掉
+            clearInterval(this.timer);
+            // 删除气球元素
+            // 方法1：直接删除元素
+            //this.parentNode.removeChild(this);
+            //aBalloons.splice(aBalloons.lastIndexOf(this), 1);
+            // 方法2：把删除元素的动作封装在一个函数，以便以后修改或者功能增删
+            // cb是boom函数的形参 - 一个匿名函数
+            cb&&cb();
+          }
+
+          this.speed ++;
+          this.style.width = this.offsetWidth - 10 + 'px';
+          this.style.height = this.offsetHeight - 10 + 'px';
+        }.bind(this), 1000/30);
+
+      }
+
+    </script>
+  </body>
+</html>
+<!--- Notes
+1. 伪元素 before after : ::
+
+2. call谁，this的值就指向谁
+call 函数主动执行的时候改变内部this指向
+bind 回调函数 延迟触发函数
+
+3. JS的参数接口
+函数 apple(a, b),第一位a是回调函数，从第二位开始（b）是形参
+
+4. 短路运算符 &&
+例如a && b，如果a为真/存在，就返回/执行右边b
+
+5. 少用IF，FOR？
+
+6. 一个例子往showArr数组里面添加数据，如果数组内容少于3
+var showArr = [0,1,2]; //0-2
+var chooseArr = []; // 0-9
+showArr.concat(chooseArr.slice(0,3-showArr.length));
+-->
