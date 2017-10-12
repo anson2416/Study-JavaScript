@@ -30,7 +30,7 @@
  - 调用Jquery插件Snowfall实现爱心从上往下飘落的效果
 
 ### Preview/Demo
-TODO
+![GIF飘落的爱心](https://github.com/anson2416/Study-JavaScript/blob/master/002%20-%20JS%E9%A3%98%E8%90%BD%E7%9A%84%E7%88%B1%E5%BF%83/demo/20171012100901SnowfallFlakes.gif)
 
 #### 参考链接
 
