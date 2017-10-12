@@ -3,6 +3,7 @@
 ## 001 - JS打气球例子
 
 *2017-10-10*
+
 `js-balloon.html` 主文件
 
 参考b站上的视频例子拷贝/学习的代码。
@@ -19,9 +20,13 @@
 ## 002 - JS飘落的爱心
 
 *2017-10-11*
+
 `JS-飘落的爱心.html` 主文件
+
 `js/jquery-3.2.1.slim.min.js` Jquery瘦身版
+
 `js/snowfall.jquery.min.js` Jquery插件-雪花飘落
+
 
 参考b站上的视频例子拷贝/学习的代码。
 代码实现的功能有：
