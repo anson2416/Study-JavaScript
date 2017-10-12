@@ -1,10 +1,9 @@
-# Study-JavaScript
-
+﻿# Study-JavaScript
 
 ## 001 - JS打气球例子
 
 *2017-10-10*
-`js-balloon.html`
+`js-balloon.html` 主文件
 
 参考b站上的视频例子拷贝/学习的代码。
 代码实现的功能有：
@@ -15,6 +14,29 @@
 
 #### 参考链接
 [月薪4万的程序员有多强按？半小时原生JS开发打气球游戏，征服现场数万人!](https://www.bilibili.com/video/av15152538/index_1.html#page=1)
+
+---
+## 002 - JS飘落的爱心
+
+*2017-10-11*
+`JS-飘落的爱心.html` 主文件
+`js/jquery-3.2.1.slim.min.js` Jquery瘦身版
+`js/snowfall.jquery.min.js` Jquery插件-雪花飘落
+
+参考b站上的视频例子拷贝/学习的代码。
+代码实现的功能有：
+
+ - 利用CSS的伪元素（::before  ::after）绘制一个心形图像♥
+ - 调用Jquery插件Snowfall实现爱心从上往下飘落的效果
+
+### Preview/Demo
+TODO
+
+#### 参考链接
+
+ - [程序员写爱心飘落特效去求婚，你们猜能坚持几个回合！](https://www.bilibili.com/video/av11913500/index_1.html#page=1)
+ - [一步一步教你用CSS画爱心](http://www.cnblogs.com/yingzi1028/p/6248937.html)
+ - [利用snowfall.jquery.js实现爱心满屏飞](http://www.cnblogs.com/yingzi1028/p/6249767.html)
 
 ---
 
