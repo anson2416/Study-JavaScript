@@ -37,6 +37,14 @@
 ### Preview/Demo
 ![GIF飘落的爱心](https://github.com/anson2416/Study-JavaScript/blob/master/002%20-%20JS%E9%A3%98%E8%90%BD%E7%9A%84%E7%88%B1%E5%BF%83/demo/20171012100901SnowfallFlakes.gif)
 
+### Notes
+
+* 使用Jquery插件Snowfall的时候，记得添加下面的代码来解决窗口大小改变的时候，雪花会变成一行的问题。
+
+  该问题在 (Position error #38)[https://github.com/loktar00/JQuery-Snowfall/issues/38] 有提及。
+
+  `html,body{padding:0; margin:0; min-height: 100%; height:100%;}`
+
 #### 参考链接
 
  - [程序员写爱心飘落特效去求婚，你们猜能坚持几个回合！](https://www.bilibili.com/video/av11913500/index_1.html#page=1)
